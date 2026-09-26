@@ -12,7 +12,7 @@ from discord.ext import tasks
 from dotenv import load_dotenv
 
 from panel import render_panel
-from scheduler import POSITIONS, Store, parse_time
+from scheduler import POSITIONS, Store, resolve_end, resolve_start
 
 BASE = Path(__file__).resolve().parent
 log = logging.getLogger("flypad")
@@ -45,8 +45,8 @@ class BookingModal(SafeModal):
     def __init__(self, bot, position):
         super().__init__(title=f"Schicht: {position}")
         self.bot, self.position = bot, position
-        self.start = discord.ui.TextInput(label=f"Beginn ({bot.zone})", placeholder="TT.MM.JJJJ HH:MM oder jetzt", max_length=30)
-        self.end = discord.ui.TextInput(label="Ende (Datum und Uhrzeit)", placeholder="TT.MM.JJJJ HH:MM", max_length=30)
+        self.start = discord.ui.TextInput(label=f"Beginn ({bot.zone})", placeholder="HH:MM oder jetzt", max_length=10)
+        self.end = discord.ui.TextInput(label="Ende (Uhrzeit)", placeholder="HH:MM", max_length=10)
         self.add_item(self.start)
         self.add_item(self.end)
 
@@ -56,8 +56,8 @@ class BookingModal(SafeModal):
             return await tell(interaction, "Bitte auf einem Server verwenden.")
         try:
             now = int(time.time())
-            start = now if self.start.value.strip().lower() == "jetzt" else parse_time(self.start.value, self.bot.zone)
-            end = parse_time(self.end.value, self.bot.zone)
+            start = resolve_start(self.start.value, self.bot.zone, now)
+            end = resolve_end(self.end.value, self.bot.zone, start)
             shift_id = await asyncio.to_thread(self.bot.store.book, interaction.guild_id,
                 interaction.user.id, interaction.user.display_name, self.position, start, end, now)
         except ValueError as error:

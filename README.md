@@ -29,8 +29,8 @@ Mit `DISCORD_GUILD_ID` werden die Befehle direkt für diesen Server registriert.
 ## Benutzung
 
 1. Im Panel Position auswählen: **Pilot**, **HEMS** oder **Notarzt**.
-2. Beginn und Ende im Format `TT.MM.JJJJ HH:MM` eintragen; beim Beginn funktioniert auch `jetzt`.
-3. Alle Eingaben gelten in **Europe/Berlin**, inklusive Sommer-/Winterzeit. Beispiel: `23.09.2026 18:00` bis `23.09.2026 22:00`. Für eine Nachtschicht beim Ende das Datum des nächsten Tages angeben.
+2. Beginn und Ende einfach als Uhrzeit im Format `HH:MM` eintragen; beim Beginn funktioniert auch `jetzt`. Ein Datum ist nicht nötig.
+3. Alle Eingaben gelten in **Europe/Berlin**, inklusive Sommer-/Winterzeit. Beispiel: `18:00` bis `22:00`. Liegt die Beginn-Uhrzeit heute schon in der Vergangenheit, wird automatisch morgen angenommen; liegt das Ende vor oder auf dem Beginn, wird automatisch eine Nachtschicht bis zum nächsten Tag angenommen.
 4. Die Bestätigung ist nur für dich sichtbar. Im Panel erscheinst du während deiner Schicht; davor als nächste Schicht oder im vollständigen Schichtplan.
 
 Uhrzeiten, die beim Wechsel der Sommer-/Winterzeit nicht existieren oder doppelt vorkommen, werden mit einer Erklärung zurückgewiesen. Discord-Zeitstempel im Nachrichtentext folgen der persönlichen Discord-Zeitzone; die Grafik nutzt immer die konfigurierte Zeitzone.
